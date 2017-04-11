@@ -18,13 +18,15 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+
+[image2]: ./Images/1.jpg "Grayscaling"
+[image3]: ./Images/2.jpg "Recovery Image"
+[image4]: ./Images/3.jpg "Recovery Image"
+[image5]: ./Images/4.jpg "Recovery Image"
+[image6]: ./Images/5.jpg "Normal Image"
+[image7]: ./Images/6.jpg "Flipped Image"
+[image8]: ./Images/7.jpg "Processed Image"
+
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -78,7 +80,7 @@ For details about how I created the training data, see the next section.
 
 The one step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track. So to improve the driving behavior in these cases, I decided to record recovery data and center lane driving data in problem areas.
 
-I also added horizontal shifts to my images.
+First I dumped 70% of images that had near zero steering measurement. I cropped the top 60 pixels and bottom 25 pixels out and reduced the size to (200, 66) to remove noise. I also, converted images to HLS from BGR and added horizontal shifts to my training set only.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
@@ -94,24 +96,25 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to recover on its own. These images show what a recovery looks like starting from the edge of track back to center lane:
 
 ![alt text][image3]
 ![alt text][image4]
 ![alt text][image5]
 
-Then I repeated this process on track two in order to get more data points.
 
 To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
 
 ![alt text][image6]
 ![alt text][image7]
 
-Etc ....
+And Here is a Fully Processed Image.
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+![alt text][image8]
+
+After the collection process, I had 288,684 number of data points. 
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+I finally randomly shuffled the data set and put 25% of the data into a validation set. In drive.py I added a preprocessing method that converted images to HLS and cropped and resized image to (200,66).
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 10 and I used an adam optimizer so that manually training the learning rate wasn't necessary.
